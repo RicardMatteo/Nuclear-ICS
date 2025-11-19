@@ -12,18 +12,26 @@ echo "Modbus Server: 0.0.0.0:${MODBUS_PORT}"
 echo "PLC Target: ${PLC_IP}:${PLC_PORT}"
 echo "========================================="
 
-# Créer ramdisk si nécessaire
+# Create ramdisk if needed
 mkdir -p /ramdisk
 chmod 755 /ramdisk
 
-# Démarrer le serveur Modbus
+# Start the Modbus server
 cd /opt/mbans/MB_SERVER
 echo "Starting Modbus Server..."
+# The Modbus server must listen on 0.0.0.0 to be reachable from Docker
 ./modbus_server &
 MODBUS_PID=$!
-sleep 3
+sleep 5
 
-# Démarrer le simulateur (mode standalone ou HIL selon config)
+# Verify the server is listening
+if netstat -tuln 2>/dev/null | grep -q ":502"; then
+    echo "Modbus server listening on port 502"
+else
+    echo "Warning: Modbus server may not be listening on port 502"
+fi
+
+# Start the simulator (standalone or HIL based on configuration)
 cd /opt/mbans/SIMULATION
 echo "Starting Nuclear Simulator..."
 if [ "$USE_PLC" = "true" ]; then
@@ -32,10 +40,10 @@ if [ "$USE_PLC" = "true" ]; then
     SIMULATOR_PID=$!
     sleep 3
     
-    # Démarrer Ferryman pour communication PLC
+    # Start Ferryman for PLC communication
     cd /opt/mbans/FERRYMAN
     echo "Starting Ferryman bridge..."
-    # Modifier l'IP dans ferryman.py
+    # Update the IP in ferryman.py to match PLC target
     sed -i "s/192.168.1.100/${PLC_IP}/g" ferryman.py
     python3 ferryman.py &
     FERRYMAN_PID=$!
@@ -46,7 +54,7 @@ else
 fi
 
 echo ""
-echo "✓ Asherah simulator started successfully!"
+echo "Asherah simulator started successfully!"
 echo "  - Modbus Server PID: $MODBUS_PID"
 echo "  - Simulator PID: $SIMULATOR_PID"
 [ -n "$FERRYMAN_PID" ] && echo "  - Ferryman PID: $FERRYMAN_PID"
@@ -54,8 +62,8 @@ echo ""
 echo "Registers available at Modbus TCP port ${MODBUS_PORT}"
 echo "Press Ctrl+C to stop..."
 
-# Handler pour arrêt propre
+# Clean shutdown handler
 trap "echo 'Stopping...'; kill $MODBUS_PID $SIMULATOR_PID $FERRYMAN_PID 2>/dev/null; exit 0" SIGTERM SIGINT
 
-# Garder le container actif
+# Keep the container running
 wait

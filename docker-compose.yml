@@ -17,23 +17,6 @@ services:
       - ./asherah/config:/config
     restart: unless-stopped
 
-  openplc:
-    image: tuttas/openplc_v3:latest # Alternative image that works
-    container_name: openplc
-    hostname: plc
-    networks:
-      ics_network:
-        ipv4_address: 172.20.0.20
-    ports:
-      - "8080:8080"
-      - "502:502"
-    environment:
-      - OPENPLC_PASSWORD=admin
-    volumes:
-      - openplc_data:/workdir
-      - ./openplc/programs:/programs
-    restart: unless-stopped
-
   scada_db:
     image: mysql/mysql-server:8.0.32
     container_name: scada_mysql
@@ -95,6 +78,12 @@ services:
     networks:
       ics_network:
         ipv4_address: 172.20.0.100
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    sysctls:
+      - net.ipv4.ip_forward=1
+
     volumes:
       - ./attacker/scripts:/root/scripts
       - ./attacker/logs:/root/logs
@@ -111,6 +100,5 @@ networks:
         - subnet: 172.20.0.0/24
 
 volumes:
-  openplc_data:
   mysql_data:
   scadalts_logs:
