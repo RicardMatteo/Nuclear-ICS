@@ -3,15 +3,15 @@ services:
     build: ./asherah
     container_name: asherah_simulator
     hostname: asherah
-    privileged: true  # Required for /ramdisk
+    privileged: true
     networks:
-      ics_network:
-        ipv4_address: 172.20.0.10
+      plc_net:
+        ipv4_address: 10.100.1.10
     ports:
       - "5020:502"
     environment:
       - MODBUS_PORT=502
-      - PLC_IP=172.20.0.20
+      - PLC_IP=10.100.1.20
       - PLC_PORT=502
     volumes:
       - ./asherah/config:/config
@@ -22,8 +22,8 @@ services:
     container_name: scada_mysql
     hostname: scada-db
     networks:
-      ics_network:
-        ipv4_address: 172.20.0.31
+      db_net:
+        ipv4_address: 10.100.3.10
     ports:
       - "3307:3306"
     environment:
@@ -34,8 +34,6 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     command: --log_bin_trust_function_creators=1
-    expose: 
-      - "3306"
     restart: unless-stopped
 
   scadalts:
@@ -43,11 +41,14 @@ services:
     container_name: scadalts
     hostname: scada
     networks:
-      ics_network:
-        ipv4_address: 172.20.0.30
+      scada_net:
+        ipv4_address: 10.100.2.10
+      db_net:
+        ipv4_address: 10.100.3.11
+      plc_net:
+        ipv4_address: 10.100.1.11
     ports:
       - "8081:8080"
-      - "8000:8000"
     environment:
       - CATALINA_OPTS=-Xmx2G -Xms2G
     volumes:
@@ -55,20 +56,11 @@ services:
       - ./scada-config:/config
     depends_on:
       - scada_db
-    expose: 
-      - "8080"
-      - "8000"
-    links:
-      - scada_db:database
-    command:
-      - /usr/bin/wait-for-it
-      - --host=scada_db
-      - --port=3306
-      - --timeout=60
-      - --strict
-      - --
-      - /usr/local/tomcat/bin/catalina.sh
-      - run
+      - ics_firewall
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=0
     restart: unless-stopped
 
   attacker:
@@ -76,28 +68,68 @@ services:
     container_name: attacker_station
     hostname: attacker
     networks:
-      ics_network:
-        ipv4_address: 172.20.0.100
+      scada_net:
+        ipv4_address: 10.100.2.100
     cap_add:
       - NET_ADMIN
       - NET_RAW
     sysctls:
       - net.ipv4.ip_forward=1
-
     volumes:
       - ./attacker/scripts:/root/scripts
       - ./attacker/logs:/root/logs
-    command: tail -f /dev/null 
+    command: >
+      bash -c "
+      apt-get update -qq &&
+      apt-get install -y iproute2 iputils-ping nmap netcat-traditional -qq &&
+      ip route add 10.100.1.0/24 via 10.100.2.254 &&
+      ip route add 10.100.3.0/24 via 10.100.2.254 &&
+      echo 'Attacker container ready with routing configured' &&
+      tail -f /dev/null"
     stdin_open: true
     tty: true
     restart: unless-stopped
 
+  ics_firewall:
+    build: ./firewall
+    container_name: ics_firewall
+    hostname: firewall
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    networks:
+      plc_net:
+        ipv4_address: 10.100.1.254
+      scada_net:
+        ipv4_address: 10.100.2.254
+      db_net:
+        ipv4_address: 10.100.3.254
+    volumes:
+      - ./firewall/logs:/var/log/firewall
+    restart: unless-stopped
+
 networks:
-  ics_network:
+  plc_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 10.100.1.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-plc
+  scada_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.100.2.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-scada
+  db_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.100.3.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-db
 
 volumes:
   mysql_data:
