@@ -41,6 +41,7 @@ RUN chmod +x asherah_npp.sh && \
 # Copier le script de démarrage
 COPY start_asherah.sh /opt/mbans/start_asherah.sh
 RUN chmod +x /opt/mbans/start_asherah.sh
+RUN sed -i 's/\r$//' /opt/mbans/start_asherah.sh
 
 WORKDIR /opt/mbans
 
