@@ -12,6 +12,9 @@ echo "Modbus Server: 0.0.0.0:${MODBUS_PORT}"
 echo "PLC Target: ${PLC_IP}:${PLC_PORT}"
 echo "========================================="
 
+# Route statique
+ip route add 10.100.2.0/24 via 10.100.1.254
+
 # Create ramdisk if needed
 mkdir -p /ramdisk
 chmod 755 /ramdisk

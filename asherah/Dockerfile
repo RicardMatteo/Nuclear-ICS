@@ -5,6 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Installation des dépendances système
 RUN apt-get update && apt-get install -y \
+    iproute2 \
+    iputils-ping \
     python3.8 \
     python3-pip \
     git \

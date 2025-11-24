@@ -12,7 +12,7 @@ import sys
 import threading
 
 # Configuration
-ASHERAH_IP = "172.20.0.10"
+ASHERAH_IP = "10.100.1.10"
 ASHERAH_PORT = 502
 
 # Interesting registers for Asherah (from the lab documentation)

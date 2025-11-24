@@ -35,11 +35,19 @@ iptables -A FORWARD -s 10.100.1.0/24 -d 10.100.1.11 -p tcp --sport 502 -j ACCEPT
 iptables -A FORWARD -s 10.100.3.11 -d 10.100.3.10 -p tcp --dport 3306 -j ACCEPT
 iptables -A FORWARD -s 10.100.3.10 -d 10.100.3.11 -p tcp --sport 3306 -j ACCEPT
 
-# BLOCK attacker (10.100.2.100) from PLC network
-iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j LOG --log-prefix "FW-BLOCK-ATTACKER: "
-iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j DROP
+# Allow ICMP (ping) between Asherah and ScadaLTS - BIDIRECTIONAL
+iptables -A FORWARD -s 10.100.1.10 -d 10.100.2.10 -p icmp -j ACCEPT
+iptables -A FORWARD -s 10.100.2.10 -d 10.100.1.10 -p icmp -j ACCEPT
 
-# Allow ICMP for diagnostics
+# ALLOW attacker to PLC network for testing (COMMENT OUT TO RE-ENABLE BLOCKING)
+iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j ACCEPT
+iptables -A FORWARD -s 10.100.1.0/24 -d 10.100.2.100 -j ACCEPT
+
+# BLOCK attacker (10.100.2.100) from PLC network - COMMENTED OUT FOR TESTING
+# iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j LOG --log-prefix "FW-BLOCK-ATTACKER: "
+# iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j DROP
+
+# Allow ICMP for diagnostics (general rule - placed after specific rules)
 iptables -A FORWARD -p icmp --icmp-type echo-request -j ACCEPT
 iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 
@@ -52,6 +60,10 @@ echo "Firewall IPs:"
 echo "  PLC Network:   10.100.1.254"
 echo "  SCADA Network: 10.100.2.254"
 echo "  DB Network:    10.100.3.254"
+echo ""
+echo "Allowed ICMP:"
+echo "  10.100.1.10 <-> 10.100.2.10 (Asherah <-> ScadaLTS)"
+echo "  Attacker (10.100.2.100) -> PLC Network (ALLOWED FOR TESTING)"
 echo "=========================================="
 
 # Show active rules

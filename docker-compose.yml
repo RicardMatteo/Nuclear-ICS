@@ -3,7 +3,7 @@ services:
     build: ./asherah
     container_name: asherah_simulator
     hostname: asherah
-    privileged: true
+    privileged: true # Required for /ramdisk
     networks:
       plc_net:
         ipv4_address: 10.100.1.10
@@ -14,11 +14,11 @@ services:
       - PLC_IP=10.100.1.20
       - PLC_PORT=502
     volumes:
-      - ./asherah/config:/config
+      - ./asherah/config.sh:/config.sh
     restart: unless-stopped
 
   scada_db:
-    image: mysql/mysql-server:8.0.32
+    build: ./scada_db
     container_name: scada_mysql
     hostname: scada-db
     networks:
@@ -39,9 +39,11 @@ services:
     restart: unless-stopped
 
   scadalts:
-    image: scadalts/scadalts:latest
+    build: ./scadalts
     container_name: scadalts
     hostname: scada
+    cap_add:
+      - NET_ADMIN  
     networks:
       scada_net:
         ipv4_address: 10.100.2.10
@@ -52,7 +54,6 @@ services:
       - CATALINA_OPTS=-Xmx2G -Xms2G
     volumes:
       - scadalts_logs:/usr/local/tomcat/logs
-      - ./scada-config:/config
     depends_on:
       - scada_db
     expose: 
@@ -60,19 +61,10 @@ services:
       - "8000"
     links:
       - scada_db:database
-    command:
-      - /usr/bin/wait-for-it
-      - --host=scada_db
-      - --port=3306
-      - --timeout=60
-      - --strict
-      - --
-      - /usr/local/tomcat/bin/catalina.sh
-      - run
     restart: unless-stopped
 
   attacker:
-    image: kalilinux/kali-rolling:latest
+    build: ./attacker
     container_name: attacker_station
     hostname: attacker
     networks:
@@ -86,15 +78,8 @@ services:
     volumes:
       - ./attacker/scripts:/root/scripts
       - ./attacker/logs:/root/logs
-    command: >
-      bash -c "
-      apt-get update -qq &&
-      apt-get install -y iproute2 iputils-ping nmap netcat-traditional -qq &&
-      ip route add 10.100.1.0/24 via 10.100.2.254 &&
-      ip route add 10.100.3.0/24 via 10.100.2.254 &&
-      echo 'Attacker container ready with routing configured' &&
-      tail -f /dev/null"
     stdin_open: true
+    privileged: true
     tty: true
     restart: unless-stopped
 
@@ -110,8 +95,6 @@ services:
         ipv4_address: 10.100.1.254
       scada_net:
         ipv4_address: 10.100.2.254
-      db_net:
-        ipv4_address: 10.100.3.254
     volumes:
       - ./firewall/logs:/var/log/firewall
     restart: unless-stopped
@@ -131,13 +114,6 @@ networks:
         - subnet: 10.100.2.0/24
     driver_opts:
       com.docker.network.bridge.name: br-scada
-  db_net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.100.3.0/24
-    driver_opts:
-      com.docker.network.bridge.name: br-db
 
 volumes:
   mysql_data:

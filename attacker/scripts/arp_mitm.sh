@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuration
-ASHERAH_IP="172.20.0.10"
-SCADA_IP="172.20.0.30"
+ASHERAH_IP="10.100.2.254"
+SCADA_IP="10.100.2.10"
 INTERFACE="eth0"
 PROXY_PORT="5502"
 
@@ -77,7 +77,7 @@ cleanup() {
     
     # Stop the Modbus proxy
     echo "[*] Stopping Modbus proxy..."
-    pkill -f "python3.*modbus_mitm_proxy.py"
+    pkill -f "python3.*mitm_replay_attack.py"
     
     echo -e "${GREEN} Cleanup complete - Network restored${NC}\n"
     exit 0
@@ -89,8 +89,8 @@ trap cleanup INT TERM
 echo -e "${YELLOW}[1/6] Checking prerequisites...${NC}"
 
 # Verify the Modbus proxy script exists
-if [ ! -f "modbus_mitm_proxy.py" ]; then
-    echo -e "${RED} modbus_mitm_proxy.py not found!${NC}"
+if [ ! -f "mitm_replay_attack.py" ]; then
+    echo -e "${RED} mitm_replay_attack.py not found!${NC}"
     echo "   Make sure you're in the scripts directory"
     exit 1
 fi

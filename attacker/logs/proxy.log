@@ -1,0 +1,30 @@
+Mode changed to: PASSTHROUGH
+   MITM Server listening on 0.0.0.0:5502
+   Proxying to 172.20.0.10:502
+   Mode: PASSTHROUGH
+
+============================================================
+  MODBUS MITM - Interactive Control
+============================================================
+Commands:
+  record       - Start recording normal operation
+  stop         - Stop recording
+  save         - Save recording to file
+  load [file]  - Load recording from file
+  replay       - Start replay attack
+  passthrough  - Return to passthrough mode
+  status       - Show current status
+  quit         - Exit
+============================================================
+
+MITM> Mode changed to: RECORD
+RECORDING started at 2025-11-24 18:55:11.360880
+
+MITM> Recording saved to recorded_values.json
+RECORDING stopped. 0 samples saved.
+Mode changed to: PASSTHROUGH
+
+MITM> Mode changed to: REPLAY
+ No recorded data to replay. Record first or load a file.
+
+MITM> 
