@@ -25,31 +25,13 @@ iptables -A INPUT -i lo -j ACCEPT
 # ICS FIREWALL RULES (UPDATED IPs!)
 # ============================================
 
-# Allow SCADA (10.100.2.10 and 10.100.1.11) to PLC network - Modbus TCP (port 502)
-iptables -A FORWARD -s 10.100.2.10 -d 10.100.1.0/24 -p tcp --dport 502 -j ACCEPT
-iptables -A FORWARD -s 10.100.1.11 -d 10.100.1.0/24 -p tcp --dport 502 -j ACCEPT
-iptables -A FORWARD -s 10.100.1.0/24 -d 10.100.2.10 -p tcp --sport 502 -j ACCEPT
-iptables -A FORWARD -s 10.100.1.0/24 -d 10.100.1.11 -p tcp --sport 502 -j ACCEPT
+# Allow SCADA (10.100.2.10 and 10.100.1.10) to PLC network - Modbus TCP (port 502)
+iptables -A FORWARD -i eth0 -o eth1 -m mac --mac-source 02:42:0a:64:01:0a -d 10.100.2.10 -p tcp --dport 502 -j ACCEPT
+iptables -A FORWARD -i eth0 -o eth1 -m mac --mac-source 02:42:0a:64:01:0a -d 10.100.2.10 -p tcp --sport 502 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -m mac --mac-source 02:42:0a:64:02:0a -d 10.100.1.10 -p tcp --sport 502 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth0 -m mac --mac-source 02:42:0a:64:02:0a -d 10.100.1.10 -p tcp --dport 502 -j ACCEPT
 
-# Allow SCADA to database (MySQL on port 3306)
-iptables -A FORWARD -s 10.100.3.11 -d 10.100.3.10 -p tcp --dport 3306 -j ACCEPT
-iptables -A FORWARD -s 10.100.3.10 -d 10.100.3.11 -p tcp --sport 3306 -j ACCEPT
-
-# Allow ICMP (ping) between Asherah and ScadaLTS - BIDIRECTIONAL
-iptables -A FORWARD -s 10.100.1.10 -d 10.100.2.10 -p icmp -j ACCEPT
-iptables -A FORWARD -s 10.100.2.10 -d 10.100.1.10 -p icmp -j ACCEPT
-
-# ALLOW attacker to PLC network for testing (COMMENT OUT TO RE-ENABLE BLOCKING)
-iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j ACCEPT
-iptables -A FORWARD -s 10.100.1.0/24 -d 10.100.2.100 -j ACCEPT
-
-# BLOCK attacker (10.100.2.100) from PLC network - COMMENTED OUT FOR TESTING
-# iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j LOG --log-prefix "FW-BLOCK-ATTACKER: "
-# iptables -A FORWARD -s 10.100.2.100 -d 10.100.1.0/24 -j DROP
-
-# Allow ICMP for diagnostics (general rule - placed after specific rules)
-iptables -A FORWARD -p icmp --icmp-type echo-request -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEP
 
 # Log all other dropped packets
 iptables -A FORWARD -j LOG --log-prefix "FW-DROP: " --log-level 4

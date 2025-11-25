@@ -16,6 +16,11 @@ services:
     volumes:
       - ./asherah/config.sh:/config.sh
     restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.all.arp_accept=0
+      - net.ipv4.conf.default.arp_accept=0
+      - net.ipv4.conf.all.arp_announce=2
+      - net.ipv4.conf.all.arp_ignore=1
 
   scada_db:
     build: ./scada_db
@@ -37,6 +42,11 @@ services:
     expose: 
       - "3306"
     restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.all.arp_accept=0
+      - net.ipv4.conf.default.arp_accept=0
+      - net.ipv4.conf.all.arp_announce=2
+      - net.ipv4.conf.all.arp_ignore=1
 
   scadalts:
     build: ./scadalts
@@ -62,6 +72,11 @@ services:
     links:
       - scada_db:database
     restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.all.arp_accept=0
+      - net.ipv4.conf.default.arp_accept=0
+      - net.ipv4.conf.all.arp_announce=2
+      - net.ipv4.conf.all.arp_ignore=1
 
   attacker:
     build: ./attacker
@@ -98,6 +113,11 @@ services:
     volumes:
       - ./firewall/logs:/var/log/firewall
     restart: unless-stopped
+    sysctls:
+      - net.ipv4.conf.all.arp_accept=0
+      - net.ipv4.conf.default.arp_accept=0
+      - net.ipv4.conf.all.arp_announce=2
+      - net.ipv4.conf.all.arp_ignore=1
 
 networks:
   plc_net:
