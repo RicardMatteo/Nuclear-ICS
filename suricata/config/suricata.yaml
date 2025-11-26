@@ -1,0 +1,78 @@
+%YAML 1.1
+---
+
+vars:
+  address-groups:
+    HOME_NET: "[10.100.1.0/24,10.100.2.0/24]"
+    EXTERNAL_NET: "!$HOME_NET"
+    PLC_NET: "[10.100.1.0/24]"
+    SCADA_NET: "[10.100.2.0/24]"
+    ASHERAH_PLC: "10.100.1.10"
+    SCADA_SERVER: "10.100.2.10"
+    
+  port-groups:
+    HTTP_PORTS: "80"
+    MODBUS_PORTS: "502"
+
+outputs:
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json
+      types:
+        - alert
+        - anomaly
+        - http
+        - dns
+        - tls
+        - modbus
+        - stats
+        - flow
+
+  - fast:
+      enabled: yes
+      filename: fast.log
+      append: yes
+
+app-layer:
+  protocols:
+    modbus:
+      enabled: yes
+      detection-ports:
+        dp: 502
+    http:
+      enabled: yes
+    dns:
+      tcp:
+        enabled: yes
+      udp:
+        enabled: yes
+    tls:
+      enabled: yes
+    ssh:
+      enabled: yes
+
+default-rule-path: /etc/suricata/rules
+rule-files:
+  - suricata.rules
+  - ics-custom.rules
+
+af-packet:
+  - interface: br-plc
+    threads: 2
+    cluster-id: 98
+    cluster-type: cluster_flow
+  - interface: br-scada
+    threads: 2
+    cluster-id: 99
+    cluster-type: cluster_flow
+
+logging:
+  default-log-level: info
+  outputs:
+    - console:
+        enabled: yes
+    - file:
+        enabled: yes
+        level: info
+        filename: suricata.log

@@ -16,6 +16,8 @@ echo "========================================="
 mkdir -p /ramdisk
 chmod 755 /ramdisk
 
+ip route add 10.100.2.0/24 via 10.100.1.254
+
 # Start the Modbus server
 cd /opt/mbans/MB_SERVER
 echo "Starting Modbus Server..."

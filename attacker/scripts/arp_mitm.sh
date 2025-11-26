@@ -32,6 +32,7 @@ declare -A cmd_pkg=(
     [python3]="python3"
     [netstat]="net-tools"
     [iptables]="iptables"
+    [pymodbus]="python3-pymodbus"
 )
 
 missing=()
@@ -89,8 +90,8 @@ trap cleanup INT TERM
 echo -e "${YELLOW}[1/6] Checking prerequisites...${NC}"
 
 # Verify the Modbus proxy script exists
-if [ ! -f "modbus_mitm_proxy.py" ]; then
-    echo -e "${RED} modbus_mitm_proxy.py not found!${NC}"
+if [ ! -f "mitm_replay_attack.py" ]; then
+    echo -e "${RED} mitm_replay_attack.py not found!${NC}"
     echo "   Make sure you're in the scripts directory"
     exit 1
 fi

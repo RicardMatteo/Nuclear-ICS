@@ -1,0 +1,36 @@
+# Règles ICS personnalisées
+
+# Command Spam Attack
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack"; \
+    modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers"; \
+    threshold: type threshold, track by_src, count 50, seconds 5; \
+    classtype:attempted-dos; priority:1; sid:1000004; rev:1;)
+
+# Write Commands
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected"; \
+    modbus.function: "write_multiple_registers"; \
+    classtype:attempted-admin; sid:1000001; rev:1;)
+
+# ARP Spoofing
+alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing"; \
+    arp.opcode: is_at; \
+    threshold: type both, track by_dst, count 2, seconds 10; \
+    classtype:network-scan; sid:1000010; rev:1;)
+
+# Port Scan
+alert tcp any any -> $HOME_NET any (msg:"ICS: Possible Port Scan Detected"; \
+    flags:S; \
+    threshold: type threshold, track by_src, count 10, seconds 5; \
+    classtype:network-scan; sid:1000020; rev:1;)
+
+# SCRAM Command
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected"; \
+    content:"|00 02|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:1; sid:1000060; rev:1;)
+
+# Pump Control
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command"; \
+    content:"|00 00|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; sid:1000062; rev:1;)
