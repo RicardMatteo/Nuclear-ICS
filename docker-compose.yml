@@ -102,14 +102,14 @@ services:
     build: ./firewall
     container_name: ics_firewall
     hostname: firewall
-    cap_add:
-      - NET_ADMIN
-      - NET_RAW
+    privileged: true
     networks:
       plc_net:
         ipv4_address: 10.100.1.254
       scada_net:
         ipv4_address: 10.100.2.254
+      monitoring_net:
+        ipv4_address: 10.100.3.254
     volumes:
       - ./firewall/logs:/var/log/firewall
     restart: unless-stopped
@@ -118,6 +118,125 @@ services:
       - net.ipv4.conf.default.arp_accept=0
       - net.ipv4.conf.all.arp_announce=2
       - net.ipv4.conf.all.arp_ignore=1
+
+  suricata:
+    build: ./suricata
+    container_name: suricata_ids
+    hostname: suricata
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_NICE
+    network_mode: host
+    volumes:
+      - ./suricata/config/suricata.yaml:/etc/suricata/suricata.yaml
+      - ./suricata/rules:/etc/suricata/rules
+      - ./suricata/logs:/var/log/suricata
+      - suricata_data:/var/lib/suricata
+    environment:
+      - SURICATA_OPTIONS=-i br-plc -i br-scada
+    command: >
+      /bin/bash -c "
+      suricata-update &&
+      suricata -c /etc/suricata/suricata.yaml -i br-plc -i br-scada -v
+      "
+    restart: unless-stopped
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    hostname: elasticsearch
+    networks:
+      monitoring_net:
+        ipv4_address: 10.100.3.10
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - cluster.name=ics-monitoring
+      - node.name=elasticsearch-node
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    restart: unless-stopped
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.0
+    container_name: logstash
+    hostname: logstash
+    networks:
+      monitoring_net:
+        ipv4_address: 10.100.3.20
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    environment:
+      - "LS_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.monitoring.enabled=false
+    volumes:
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./suricata/logs:/var/log/suricata:ro
+      - ./firewall/logs:/var/log/firewall:ro
+      - scadalts_logs:/var/log/scada:ro
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    hostname: kibana
+    networks:
+      monitoring_net:
+        ipv4_address: 10.100.3.30
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=kibana
+      - SERVER_HOST=0.0.0.0
+      - xpack.security.enabled=false
+      - xpack.encryptedSavedObjects.encryptionKey=fhjskloppd678ehkdfdlliverpoolfcr
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+      - kibana_data:/usr/share/kibana/data
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.0
+    container_name: filebeat
+    hostname: filebeat
+    user: root
+    networks:
+      monitoring_net:
+        ipv4_address: 10.100.3.40
+    volumes:
+      - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./suricata/logs:/var/log/suricata:ro
+      - ./firewall/logs:/var/log/firewall:ro
+      - scadalts_logs:/var/log/scada:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: filebeat -e -strict.perms=false
+    depends_on:
+      - elasticsearch
+      - logstash
+    restart: unless-stopped
 
 networks:
   plc_net:
@@ -134,7 +253,17 @@ networks:
         - subnet: 10.100.2.0/24
     driver_opts:
       com.docker.network.bridge.name: br-scada
+  monitoring_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.100.3.0/24
+    driver_opts:
+      com.docker.network.bridge.name: br-monitoring
 
 volumes:
   mysql_data:
   scadalts_logs:
+  elasticsearch_data:
+  kibana_data:
+  suricata_data:

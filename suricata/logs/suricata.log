@@ -1,0 +1,429 @@
+2/12/2025 -- 22:03:12 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 22:03:12 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 22:03:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:03:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:03:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:03:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:03:12 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 22:03:12 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 22:03:12 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 22:03:12 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 22:03:12 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 22:03:12 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 22:03:12 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 22:03:12 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:03:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 22:03:12 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 22:03:12 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 22:03:12 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 22:03:12 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 22:03:12 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 22:03:12 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 22:03:12 - <Info> - All AFP capture threads are running.
+2/12/2025 -- 22:26:11 - <Notice> - Signal Received.  Stopping engine.
+2/12/2025 -- 22:26:11 - <Info> - time elapsed 1379.510s
+2/12/2025 -- 22:26:12 - <Info> - Alerts: 0
+2/12/2025 -- 22:26:12 - <Info> - cleaning up signature grouping structure... complete
+2/12/2025 -- 22:26:12 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+2/12/2025 -- 22:26:12 - <Notice> - Stats for 'br-scada':  pkts: 35932, drop: 0 (0.00%), invalid chksum: 0
+2/12/2025 -- 22:27:03 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 22:27:03 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 22:27:03 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:27:03 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:27:03 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:27:03 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 22:27:03 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 22:27:03 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 22:27:03 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 22:27:03 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 22:27:03 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 22:27:03 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 22:27:03 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 22:27:03 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 22:27:03 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 22:27:03 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 22:27:03 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 22:27:03 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 22:27:03 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 22:27:03 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 22:27:03 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 22:27:04 - <Info> - All AFP capture threads are running.
+2/12/2025 -- 23:08:13 - <Notice> - Signal Received.  Stopping engine.
+2/12/2025 -- 23:08:13 - <Info> - time elapsed 2470.100s
+2/12/2025 -- 23:08:15 - <Info> - Alerts: 0
+2/12/2025 -- 23:08:15 - <Info> - cleaning up signature grouping structure... complete
+2/12/2025 -- 23:08:15 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+2/12/2025 -- 23:08:15 - <Notice> - Stats for 'br-scada':  pkts: 40617, drop: 0 (0.00%), invalid chksum: 0
+2/12/2025 -- 23:09:12 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 23:09:12 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 23:09:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:09:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:09:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:09:12 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:09:12 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:09:12 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:09:12 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:09:12 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:09:12 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 23:09:12 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 23:09:12 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 23:09:12 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:09:12 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 23:09:12 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 23:09:12 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 23:09:12 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 23:09:12 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:09:12 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:09:12 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 23:09:13 - <Info> - All AFP capture threads are running.
+2/12/2025 -- 23:23:43 - <Notice> - Signal Received.  Stopping engine.
+2/12/2025 -- 23:23:43 - <Info> - time elapsed 870.988s
+2/12/2025 -- 23:23:44 - <Info> - Alerts: 0
+2/12/2025 -- 23:23:44 - <Info> - cleaning up signature grouping structure... complete
+2/12/2025 -- 23:23:44 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+2/12/2025 -- 23:23:44 - <Notice> - Stats for 'br-scada':  pkts: 32542, drop: 0 (0.00%), invalid chksum: 0
+2/12/2025 -- 23:24:47 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 23:24:47 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 23:24:47 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:24:47 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:24:47 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:24:47 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:24:47 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:24:47 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:24:47 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:24:47 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:24:47 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 23:24:47 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 23:24:47 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 23:24:47 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:24:47 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 23:24:47 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 23:24:47 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 23:24:47 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 23:24:47 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:24:47 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:24:47 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 23:24:47 - <Info> - All AFP capture threads are running.
+2/12/2025 -- 23:30:24 - <Notice> - Signal Received.  Stopping engine.
+2/12/2025 -- 23:30:24 - <Info> - time elapsed 337.397s
+2/12/2025 -- 23:30:26 - <Info> - Alerts: 0
+2/12/2025 -- 23:30:26 - <Info> - cleaning up signature grouping structure... complete
+2/12/2025 -- 23:30:26 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+2/12/2025 -- 23:30:26 - <Notice> - Stats for 'br-scada':  pkts: 32601, drop: 0 (0.00%), invalid chksum: 0
+2/12/2025 -- 23:31:23 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 23:31:23 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 23:31:23 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:31:23 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:31:23 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:31:23 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:31:24 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:31:24 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:31:24 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:31:24 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:31:24 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 23:31:24 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 23:31:24 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 23:31:24 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:31:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 23:31:24 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 23:31:24 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 23:31:24 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 23:31:24 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:31:24 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:31:24 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 23:31:24 - <Info> - All AFP capture threads are running.
+2/12/2025 -- 23:56:55 - <Notice> - Signal Received.  Stopping engine.
+2/12/2025 -- 23:56:55 - <Info> - time elapsed 1531.848s
+2/12/2025 -- 23:56:57 - <Info> - Alerts: 0
+2/12/2025 -- 23:56:57 - <Info> - cleaning up signature grouping structure... complete
+2/12/2025 -- 23:56:57 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+2/12/2025 -- 23:56:57 - <Notice> - Stats for 'br-scada':  pkts: 34905, drop: 0 (0.00%), invalid chksum: 0
+2/12/2025 -- 23:59:19 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+2/12/2025 -- 23:59:19 - <Info> - CPUs/cores online: 4
+2/12/2025 -- 23:59:19 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:59:19 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:59:19 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:59:19 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+2/12/2025 -- 23:59:19 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:59:19 - <Info> - Found an MTU of 1500 for 'br-plc'
+2/12/2025 -- 23:59:19 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:59:19 - <Info> - Found an MTU of 1500 for 'br-scada'
+2/12/2025 -- 23:59:19 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+2/12/2025 -- 23:59:19 - <Info> - eve-log output device (regular) initialized: eve.json
+2/12/2025 -- 23:59:19 - <Info> - fast output device (regular) initialized: fast.log
+2/12/2025 -- 23:59:19 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+2/12/2025 -- 23:59:19 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+2/12/2025 -- 23:59:19 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+2/12/2025 -- 23:59:19 - <Info> - Threshold config parsed: 0 rule(s) found
+2/12/2025 -- 23:59:19 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+2/12/2025 -- 23:59:19 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:59:19 - <Info> - Going to use 2 thread(s)
+2/12/2025 -- 23:59:19 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+2/12/2025 -- 23:59:19 - <Info> - All AFP capture threads are running.
+3/12/2025 -- 00:06:03 - <Notice> - Signal Received.  Stopping engine.
+3/12/2025 -- 00:06:03 - <Info> - time elapsed 404.155s
+3/12/2025 -- 00:06:04 - <Info> - Alerts: 0
+3/12/2025 -- 00:06:04 - <Info> - cleaning up signature grouping structure... complete
+3/12/2025 -- 00:06:04 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+3/12/2025 -- 00:06:04 - <Notice> - Stats for 'br-scada':  pkts: 33843, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 00:07:00 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+3/12/2025 -- 00:07:00 - <Info> - CPUs/cores online: 4
+3/12/2025 -- 00:07:00 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:07:00 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:07:00 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:07:00 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:07:00 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:07:00 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:07:00 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:07:00 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:07:00 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+3/12/2025 -- 00:07:00 - <Info> - eve-log output device (regular) initialized: eve.json
+3/12/2025 -- 00:07:00 - <Info> - fast output device (regular) initialized: fast.log
+3/12/2025 -- 00:07:00 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:07:00 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+3/12/2025 -- 00:07:00 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+3/12/2025 -- 00:07:00 - <Info> - Threshold config parsed: 0 rule(s) found
+3/12/2025 -- 00:07:00 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+3/12/2025 -- 00:07:00 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:07:00 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:07:00 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+3/12/2025 -- 00:07:01 - <Info> - All AFP capture threads are running.
+3/12/2025 -- 00:23:35 - <Notice> - Signal Received.  Stopping engine.
+3/12/2025 -- 00:23:35 - <Info> - time elapsed 995.033s
+3/12/2025 -- 00:23:37 - <Info> - Alerts: 0
+3/12/2025 -- 00:23:37 - <Info> - cleaning up signature grouping structure... complete
+3/12/2025 -- 00:23:37 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+3/12/2025 -- 00:23:37 - <Notice> - Stats for 'br-scada':  pkts: 33665, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 00:24:38 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+3/12/2025 -- 00:24:38 - <Info> - CPUs/cores online: 4
+3/12/2025 -- 00:24:38 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:24:38 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:24:38 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:24:38 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:24:38 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:24:38 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:24:38 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:24:38 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:24:38 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+3/12/2025 -- 00:24:38 - <Info> - eve-log output device (regular) initialized: eve.json
+3/12/2025 -- 00:24:38 - <Info> - fast output device (regular) initialized: fast.log
+3/12/2025 -- 00:24:38 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:24:38 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+3/12/2025 -- 00:24:38 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+3/12/2025 -- 00:24:38 - <Info> - Threshold config parsed: 0 rule(s) found
+3/12/2025 -- 00:24:38 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+3/12/2025 -- 00:24:38 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:24:38 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:24:38 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+3/12/2025 -- 00:24:38 - <Info> - All AFP capture threads are running.
+3/12/2025 -- 00:37:29 - <Notice> - Signal Received.  Stopping engine.
+3/12/2025 -- 00:37:29 - <Info> - time elapsed 771.421s
+3/12/2025 -- 00:37:31 - <Info> - Alerts: 0
+3/12/2025 -- 00:37:31 - <Info> - cleaning up signature grouping structure... complete
+3/12/2025 -- 00:37:31 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+3/12/2025 -- 00:37:31 - <Notice> - Stats for 'br-scada':  pkts: 34742, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 00:38:24 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+3/12/2025 -- 00:38:24 - <Info> - CPUs/cores online: 4
+3/12/2025 -- 00:38:24 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:38:24 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:38:24 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:38:24 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 00:38:24 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:38:24 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 00:38:24 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:38:24 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 00:38:24 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+3/12/2025 -- 00:38:24 - <Info> - eve-log output device (regular) initialized: eve.json
+3/12/2025 -- 00:38:24 - <Info> - fast output device (regular) initialized: fast.log
+3/12/2025 -- 00:38:24 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 00:38:24 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+3/12/2025 -- 00:38:24 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+3/12/2025 -- 00:38:24 - <Info> - Threshold config parsed: 0 rule(s) found
+3/12/2025 -- 00:38:24 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+3/12/2025 -- 00:38:25 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:38:25 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 00:38:25 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+3/12/2025 -- 00:38:25 - <Info> - All AFP capture threads are running.
+3/12/2025 -- 00:43:31 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-plc': (100) Network is down
+3/12/2025 -- 00:43:31 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-plc': (100) Network is down
+3/12/2025 -- 00:43:31 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-scada': (100) Network is down
+3/12/2025 -- 00:43:31 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-scada': (100) Network is down
+3/12/2025 -- 00:43:51 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-plc'
+3/12/2025 -- 00:43:51 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-plc'
+3/12/2025 -- 00:43:52 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-scada'
+3/12/2025 -- 00:43:52 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-scada'
+3/12/2025 -- 00:44:12 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-plc'
+3/12/2025 -- 00:44:12 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-plc'
+3/12/2025 -- 00:44:13 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-scada'
+3/12/2025 -- 00:44:13 - <Warning> - [ERRCODE: SC_ERR_AFP_CREATE(190)] - Can not open iface 'br-scada'
+3/12/2025 -- 00:44:21 - <Info> - Interface 'br-scada' is back
+3/12/2025 -- 00:44:21 - <Info> - Interface 'br-plc' is back
+3/12/2025 -- 00:44:21 - <Info> - Interface 'br-plc' is back
+3/12/2025 -- 00:44:22 - <Info> - Interface 'br-scada' is back
+3/12/2025 -- 00:45:20 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-plc': (100) Network is down
+3/12/2025 -- 00:45:20 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-plc': (100) Network is down
+3/12/2025 -- 00:45:20 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-scada': (100) Network is down
+3/12/2025 -- 00:45:20 - <Error> - [ERRCODE: SC_ERR_AFP_READ(191)] - Error reading data from iface 'br-scada': (100) Network is down
+3/12/2025 -- 00:45:40 - <Notice> - Signal Received.  Stopping engine.
+3/12/2025 -- 00:45:40 - <Info> - time elapsed 435.952s
+3/12/2025 -- 00:45:42 - <Info> - Alerts: 1
+3/12/2025 -- 00:45:42 - <Info> - cleaning up signature grouping structure... complete
+3/12/2025 -- 00:45:42 - <Notice> - Stats for 'br-plc':  pkts: 20, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-plc': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-plc': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-plc': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-plc': No such device (19)
+3/12/2025 -- 00:45:42 - <Notice> - Stats for 'br-scada':  pkts: 36523, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-scada': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-scada': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-scada': No such device (19)
+3/12/2025 -- 00:45:42 - <Warning> - [ERRCODE: SC_ERR_SYSCALL(50)] - Failure when trying to set feature via ioctl for 'br-scada': No such device (19)
+3/12/2025 -- 01:26:43 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+3/12/2025 -- 01:26:43 - <Info> - CPUs/cores online: 4
+3/12/2025 -- 01:26:43 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:26:43 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:26:43 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:26:43 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:26:43 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 01:26:43 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 01:26:43 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 01:26:43 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 01:26:43 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+3/12/2025 -- 01:26:43 - <Info> - eve-log output device (regular) initialized: eve.json
+3/12/2025 -- 01:26:43 - <Info> - fast output device (regular) initialized: fast.log
+3/12/2025 -- 01:26:43 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:26:43 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+3/12/2025 -- 01:26:43 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+3/12/2025 -- 01:26:43 - <Info> - Threshold config parsed: 0 rule(s) found
+3/12/2025 -- 01:26:43 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+3/12/2025 -- 01:26:43 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 01:26:43 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 01:26:43 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+3/12/2025 -- 01:26:44 - <Info> - All AFP capture threads are running.
+3/12/2025 -- 01:27:14 - <Notice> - Signal Received.  Stopping engine.
+3/12/2025 -- 01:27:14 - <Info> - time elapsed 31.003s
+3/12/2025 -- 01:27:16 - <Info> - Alerts: 0
+3/12/2025 -- 01:27:16 - <Info> - cleaning up signature grouping structure... complete
+3/12/2025 -- 01:27:16 - <Notice> - Stats for 'br-plc':  pkts: 0, drop: 0 (-nan%), invalid chksum: 0
+3/12/2025 -- 01:27:16 - <Notice> - Stats for 'br-scada':  pkts: 2787, drop: 0 (0.00%), invalid chksum: 0
+3/12/2025 -- 01:28:26 - <Notice> - This is Suricata version 6.0.10 RELEASE running in SYSTEM mode
+3/12/2025 -- 01:28:26 - <Info> - CPUs/cores online: 4
+3/12/2025 -- 01:28:26 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:28:26 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol dcerpc enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:28:26 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:28:26 - <Warning> - [ERRCODE: SC_ERR_CONF_YAML_ERROR(242)] - App-Layer protocol http2 enable status not set, so enabling by default. This behavior will change in Suricata 7, so please update your config. See ticket #4744 for more details.
+3/12/2025 -- 01:28:26 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 01:28:26 - <Info> - Found an MTU of 1500 for 'br-plc'
+3/12/2025 -- 01:28:26 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 01:28:26 - <Info> - Found an MTU of 1500 for 'br-scada'
+3/12/2025 -- 01:28:26 - <Info> - No 'host-mode': suricata is in IDS mode, using default setting 'sniffer-only'
+3/12/2025 -- 01:28:26 - <Info> - eve-log output device (regular) initialized: eve.json
+3/12/2025 -- 01:28:26 - <Info> - fast output device (regular) initialized: fast.log
+3/12/2025 -- 01:28:26 - <Warning> - [ERRCODE: SC_ERR_NO_RULES(42)] - No rule files match the pattern /etc/suricata/rules/suricata.rules
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Possible Modbus Command Spam Attack";     modbus.function: "write_single_coil|write_single_register|write_multiple_coils|write_multiple_registers";     threshold: type threshold, track by_src, count 50, seconds 5;     classtype:attempted-dos; priority:1; sid:1000004; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 4
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"ICS: Modbus Write Command Detected";     modbus.function: "write_multiple_registers";     classtype:attempted-admin; sid:1000001; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 10
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_UNKNOWN_PROTOCOL(124)] - protocol "arp" cannot be used in a signature.  Either detection for this protocol is not yet supported OR detection has been disabled for protocol through the yaml option app-layer.protocols.arp.detection-enabled
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert arp any any -> any any (msg:"ICS: Possible ARP Spoofing";     arp.opcode: is_at;     threshold: type both, track by_dst, count 2, seconds 10;     classtype:network-scan; sid:1000010; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 15
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM Command Detected";     content:"|00 02|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; priority:1; sid:1000060; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 27
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_RULE_KEYWORD_UNKNOWN(102)] - unknown rule keyword 'modbus.function'.
+3/12/2025 -- 01:28:26 - <Error> - [ERRCODE: SC_ERR_INVALID_SIGNATURE(39)] - error parsing signature "alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command";     content:"|00 00|"; offset:0; depth:2;     modbus.function: "write_single_coil";     classtype:attempted-admin; sid:1000062; rev:1;)" from file /etc/suricata/rules/ics-custom.rules at line 33
+3/12/2025 -- 01:28:26 - <Info> - 2 rule files processed. 1 rules successfully loaded, 5 rules failed
+3/12/2025 -- 01:28:26 - <Info> - Threshold config parsed: 0 rule(s) found
+3/12/2025 -- 01:28:26 - <Info> - 1 signatures processed. 0 are IP-only rules, 0 are inspecting packet payload, 0 inspect application layer, 0 are decoder event only
+3/12/2025 -- 01:28:26 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 01:28:26 - <Info> - Going to use 2 thread(s)
+3/12/2025 -- 01:28:26 - <Notice> - all 4 packet processing threads, 4 management threads initialized, engine started.
+3/12/2025 -- 01:28:26 - <Info> - All AFP capture threads are running.

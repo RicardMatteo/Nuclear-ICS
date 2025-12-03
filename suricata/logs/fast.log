@@ -1,0 +1,1 @@
+12/03/2025-00:44:40.761479  [**] [1:1000020:1] ICS: Possible Port Scan Detected [**] [Classification: Detection of a Network Scan] [Priority: 3] {TCP} 10.100.2.10:50552 -> 10.100.2.20:3306
