@@ -87,7 +87,7 @@ docker-compose -f docker-compose.yml -f docker-compose.vulnerable.yml up --build
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.secured.yml up --build```
-
+```
 ---
 
 ## Interfaces disponibles
@@ -164,6 +164,7 @@ Une fois l’attaque lancée :
 ![Diagramme de l'attaque](./docs/images/Réseau.png)
 
 En mode sécurisé : 
+```
 ┌──────────────────────────────────────┐
 │   PLC Network (10.100.1.0/24)        │
 │   ┌──────────────┐                   │
@@ -189,7 +190,7 @@ En mode sécurisé :
 │   └──────────────┘                  │  │  │     .30      │                   │
 └─────────────────────────────────────┘  │  └──────────────┘                   │
                                          └─────────────────────────────────────┘
-
+```
 ---
 
 ## Ressources
@@ -203,3 +204,4 @@ En mode sécurisé :
 
 * **Simulation Asherah Nuclear Power Plant (MBans)**
   [https://github.com/ait-cs-IaaS/mbans](https://github.com/ait-cs-IaaS/mbans)
+
