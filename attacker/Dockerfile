@@ -16,6 +16,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists/*
 
 COPY startup.sh /usr/local/bin/
+RUN sed -i 's/\r$//' /usr/local/bin/startup.sh
 RUN chmod +x /usr/local/bin/startup.sh
 
 CMD ["/usr/local/bin/startup.sh"]

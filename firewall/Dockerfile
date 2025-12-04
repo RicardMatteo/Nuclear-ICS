@@ -8,6 +8,7 @@ RUN apk add --no-cache \
     tcpdump
 
 COPY firewall-rules.sh /usr/local/bin/
+RUN sed -i 's/\r$//' /usr/local/bin/firewall-rules.sh
 RUN chmod +x /usr/local/bin/firewall-rules.sh
 
 CMD ["/usr/local/bin/firewall-rules.sh"]

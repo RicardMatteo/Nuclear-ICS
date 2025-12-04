@@ -28,8 +28,4 @@ logging.files:
   keepfiles: 7
   permissions: 0644
 
-<<<<<<< HEAD
 monitoring.enabled: false
-=======
-monitoring.enabled: false
->>>>>>> origin/feature/firewall

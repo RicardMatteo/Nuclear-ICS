@@ -13,13 +13,14 @@ echo "PLC Target: ${PLC_IP}:${PLC_PORT}"
 echo "========================================="
 
 # Route statique
-ip route add 10.100.2.0/24 via 10.100.1.254
+if ip addr show eth0 | grep -q "10\.100\.1\."; then
+    echo 'Configuring route for 10.100.2.0/24 via 10.100.1.254'
+    ip route add 10.100.2.0/24 via 10.100.1.254
+fi
 
 # Create ramdisk if needed
 mkdir -p /ramdisk
 chmod 755 /ramdisk
-
-ip route add 10.100.2.0/24 via 10.100.1.254
 
 # Start the Modbus server
 cd /opt/mbans/MB_SERVER

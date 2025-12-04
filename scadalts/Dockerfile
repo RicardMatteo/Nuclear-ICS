@@ -22,6 +22,7 @@ RUN apt-get update -qq && \
 # Copy startup script
 COPY startup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/startup.sh
+RUN sed -i 's/\r$//' /usr/local/bin/startup.sh
 
 # Set ownership for Tomcat directories
 RUN chown -R scada:scada /usr/local/tomcat/logs \
