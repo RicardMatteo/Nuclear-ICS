@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuration
-ASHERAH_IP="10.100.2.254"
-SCADA_IP="10.100.2.10"
+ASHERAH_IP="172.20.0.10"
+SCADA_IP="172.20.0.30"
 INTERFACE="eth0"
 PROXY_PORT="5502"
 
@@ -71,10 +71,6 @@ cleanup() {
     echo "[*] Removing iptables rules..."
     iptables -t nat -D PREROUTING -p tcp --dport 502 -j REDIRECT --to-port $PROXY_PORT 2>/dev/null
     iptables -D FORWARD -j ACCEPT 2>/dev/null
-    
-    # Disable IP forwarding
-    echo "[*] Disabling IP forwarding..."
-    echo 0 > /proc/sys/net/ipv4/ip_forward
     
     # Stop the Modbus proxy
     echo "[*] Stopping Modbus proxy..."
