@@ -12,7 +12,7 @@ import sys
 import os
 
 # Configuration
-ASHERAH_IP = "172.20.0.10"
+ASHERAH_IP = "10.100.1.10"
 ASHERAH_PORT = 502
 REFRESH_RATE = 2  # seconds
 

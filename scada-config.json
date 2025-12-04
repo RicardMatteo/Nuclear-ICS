@@ -18,7 +18,7 @@
          "createSocketMonitorPoint":false,
          "enabled":true,
          "encapsulated":false,
-         "host":"172.20.0.10",
+         "host":"10.100.1.10",
          "maxReadBitCount":2000,
          "maxReadRegisterCount":125,
          "maxWriteRegisterCount":120,

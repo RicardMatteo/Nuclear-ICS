@@ -33,4 +33,8 @@ alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: CRITICAL - SCRAM C
 alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ICS: Primary Pump Control Command"; \
     content:"|00 00|"; offset:0; depth:2; \
     modbus.function: "write_single_coil"; \
+<<<<<<< HEAD
     classtype:attempted-admin; sid:1000062; rev:1;)
+=======
+    classtype:attempted-admin; sid:1000062; rev:1;)
+>>>>>>> origin/feature/firewall
