@@ -3,12 +3,11 @@ services:
     build: ./asherah
     container_name: asherah_simulator
     hostname: asherah
-    privileged: true  # Required for /ramdisk
-    networks:
-      ics_network:
-        ipv4_address: 172.20.0.10
-    ports:
-      - "5020:502"
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - NET_RAW
     environment:
       - MODBUS_PORT=502
       - PLC_IP=172.20.0.20
@@ -21,11 +20,6 @@ services:
     image: mysql/mysql-server:8.0.32
     container_name: scada_mysql
     hostname: scada-db
-    networks:
-      ics_network:
-        ipv4_address: 172.20.0.31
-    ports:
-      - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_USER=root
@@ -39,12 +33,11 @@ services:
     restart: unless-stopped
 
   scadalts:
-    image: scadalts/scadalts:latest
+    build: ./scadalts
     container_name: scadalts
     hostname: scada
-    networks:
-      ics_network:
-        ipv4_address: 172.20.0.30
+    cap_add:
+      - NET_ADMIN  
     ports:
       - "8081:8080"
       - "8000:8000"
@@ -52,7 +45,6 @@ services:
       - CATALINA_OPTS=-Xmx2G -Xms2G
     volumes:
       - scadalts_logs:/usr/local/tomcat/logs
-      - ./scada-config:/config
     depends_on:
       - scada_db
     expose: 
@@ -60,30 +52,17 @@ services:
       - "8000"
     links:
       - scada_db:database
-    command:
-      - /usr/bin/wait-for-it
-      - --host=scada_db
-      - --port=3306
-      - --timeout=60
-      - --strict
-      - --
-      - /usr/local/tomcat/bin/catalina.sh
-      - run
     restart: unless-stopped
 
   attacker:
     image: kalilinux/kali-rolling:latest
     container_name: attacker_station
     hostname: attacker
-    networks:
-      ics_network:
-        ipv4_address: 172.20.0.100
     cap_add:
       - NET_ADMIN
       - NET_RAW
     sysctls:
       - net.ipv4.ip_forward=1
-
     volumes:
       - ./attacker/scripts:/root/scripts
       - ./attacker/logs:/root/logs
@@ -92,13 +71,9 @@ services:
     tty: true
     restart: unless-stopped
 
-networks:
-  ics_network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/24
-
 volumes:
   mysql_data:
   scadalts_logs:
+  elasticsearch_data:
+  kibana_data:
+  suricata_data:

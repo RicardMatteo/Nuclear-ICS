@@ -1,0 +1,12 @@
+config.reload.automatic: true
+config.reload.interval: 3s
+http.host: 0.0.0.0
+http.port: 9600
+log.level: info
+path.logs: /var/log/logstash
+pipeline.batch.delay: 50
+pipeline.batch.size: 125
+pipeline.workers: 2
+queue.max_bytes: 1gb
+queue.type: memory
+xpack.monitoring.enabled: false

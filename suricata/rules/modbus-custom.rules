@@ -1,0 +1,175 @@
+# suricata/rules/modbus-custom.rules
+# Règles spécifiques au protocole Modbus pour Asherah
+
+# ============================================================================
+# MODBUS FUNCTION CODES - Détection fine par fonction
+# ============================================================================
+
+# Read operations (généralement légitimes mais à surveiller)
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Read Coils (FC01)"; \
+    modbus.function: "read_coils"; \
+    threshold: type limit, track by_src, count 1, seconds 1; \
+    classtype:protocol-command-decode; sid:2000010; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Read Discrete Inputs (FC02)"; \
+    modbus.function: "read_discrete_inputs"; \
+    threshold: type limit, track by_src, count 1, seconds 1; \
+    classtype:protocol-command-decode; sid:2000011; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Read Holding Registers (FC03)"; \
+    modbus.function: "read_holding_registers"; \
+    threshold: type limit, track by_src, count 1, seconds 1; \
+    classtype:protocol-command-decode; sid:2000012; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Read Input Registers (FC04)"; \
+    modbus.function: "read_input_registers"; \
+    threshold: type limit, track by_src, count 1, seconds 1; \
+    classtype:protocol-command-decode; sid:2000013; rev:1;)
+
+# Write operations (TOUJOURS loguer, potentiellement dangereux)
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Write Single Coil (FC05)"; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:2; sid:2000020; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Write Single Register (FC06)"; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:2; sid:2000021; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Write Multiple Coils (FC15)"; \
+    modbus.function: "write_multiple_coils"; \
+    classtype:attempted-admin; priority:2; sid:2000022; rev:1;)
+
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Write Multiple Registers (FC16)"; \
+    modbus.function: "write_multiple_registers"; \
+    classtype:attempted-admin; priority:2; sid:2000023; rev:1;)
+
+# ============================================================================
+# ASHERAH SPECIFIC - Adresses critiques
+# ============================================================================
+
+# Coil 0: Primary Pump 1 (RC1_PumpOnOffCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Primary Pump 1 Control (Coil 0)"; \
+    content:"|00 00|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:1; sid:3000001; rev:1;)
+
+# Coil 1: Primary Pump 2 (RC2_PumpOnOffCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Primary Pump 2 Control (Coil 1)"; \
+    content:"|00 01|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:1; sid:3000002; rev:1;)
+
+# Coil 2: SCRAM Command (CR_SCRAMCmd) - CRITIQUE
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: CRITICAL - SCRAM Command (Coil 2)"; \
+    content:"|00 02|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:1; sid:3000003; rev:1;)
+
+# Coil 3: Pressurizer Backup Heater (PZ_BackupHeaterPowCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Pressurizer Heater Control (Coil 3)"; \
+    content:"|00 03|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:2; sid:3000004; rev:1;)
+
+# Coil 4: Makeup Pump (AF_MakeupPumpCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Makeup Pump Control (Coil 4)"; \
+    content:"|00 04|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:2; sid:3000005; rev:1;)
+
+# Coil 5: Safety Valve (SD_SafetyValveCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Safety Valve Control (Coil 5)"; \
+    content:"|00 05|"; offset:0; depth:2; \
+    modbus.function: "write_single_coil"; \
+    classtype:attempted-admin; priority:1; sid:3000006; rev:1;)
+
+# Holding Register 0: Pump 1 Speed (RC1_PumpSpeedCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Pump 1 Speed Command (HR 0)"; \
+    content:"|00 00|"; offset:0; depth:2; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:2; sid:3000010; rev:1;)
+
+# Holding Register 1: Pump 2 Speed (RC2_PumpSpeedCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Pump 2 Speed Command (HR 1)"; \
+    content:"|00 01|"; offset:0; depth:2; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:2; sid:3000011; rev:1;)
+
+# Holding Register 2: Control Rod Position (CR_PosCmd)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Control Rod Position Command (HR 2)"; \
+    content:"|00 02|"; offset:0; depth:2; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:1; sid:3000012; rev:1;)
+
+# Holding Register 17: Reactor Power Setpoint (CTRL_RXPowerSetpoint)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Reactor Power Setpoint (HR 17)"; \
+    content:"|00 11|"; offset:0; depth:2; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:1; sid:3000017; rev:1;)
+
+# Holding Register 18: Pressurizer Pressure Setpoint (CTRL_PZPressSetPoint)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Pressurizer Pressure Setpoint (HR 18)"; \
+    content:"|00 12|"; offset:0; depth:2; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:2; sid:3000018; rev:1;)
+
+# ============================================================================
+# VALEURS ANORMALES - Détection de setpoints dangereux
+# ============================================================================
+
+# Pump speed à 0% (arrêt complet)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: CRITICAL - Pump Speed Set to 0%"; \
+    content:"|00 00 00 00|"; offset:0; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:1; sid:3000100; rev:1;)
+
+# Power setpoint >110% (au-delà de la limite de sécurité)
+# Note: 110% = 65535 en raw, >110% nécessite analyse plus complexe via script
+
+# Control rod position extrême (complètement retiré = danger)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: CRITICAL - Control Rods Fully Withdrawn"; \
+    content:"|00 02 FF FF|"; offset:0; \
+    modbus.function: "write_single_register"; \
+    classtype:attempted-admin; priority:1; sid:3000101; rev:1;)
+
+# ============================================================================
+# PATTERNS D'ATTAQUE ZERO DYNAMICS
+# ============================================================================
+
+# Détection de séquence: arrêt des deux pompes
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Zero Dynamics - Dual Pump Shutdown Sequence"; \
+    content:"|00 00 00 00|"; \
+    modbus.function: "write_single_coil|write_single_register"; \
+    threshold: type both, track by_src, count 2, seconds 5; \
+    classtype:attempted-dos; priority:1; sid:3000200; rev:1;)
+
+# Spam de la même commande (indicateur de race condition attack)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Rapid Repeated Command - Possible Race Condition"; \
+    modbus.function: "write_single_coil|write_single_register"; \
+    threshold: type threshold, track by_src, count 20, seconds 1; \
+    classtype:attempted-dos; priority:1; sid:3000201; rev:1;)
+
+# Commandes conflictuelles (ON puis OFF très rapidement)
+alert modbus any any -> $ASHERAH_PLC $MODBUS_PORTS (msg:"ASHERAH: Conflicting Commands - Possible Controller Confusion"; \
+    modbus.function: "write_single_coil"; \
+    threshold: type both, track by_dst, count 10, seconds 5; \
+    classtype:attempted-dos; priority:2; sid:3000202; rev:1;)
+
+# ============================================================================
+# EXCEPTIONS ET ERREURS MODBUS
+# ============================================================================
+
+# Modbus Exception responses
+alert modbus $PLC_NET $MODBUS_PORTS -> any any (msg:"Modbus: Exception Response Detected"; \
+    modbus.function: "error"; \
+    classtype:protocol-command-decode; priority:3; sid:2000100; rev:1;)
+
+# Illegal Function Code
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Illegal Function Code"; \
+    content:"|01|"; offset:7; depth:1; \
+    classtype:protocol-command-decode; priority:2; sid:2000101; rev:1;)
+
+# Illegal Data Address
+alert modbus any any -> $PLC_NET $MODBUS_PORTS (msg:"Modbus: Illegal Data Address"; \
+    content:"|02|"; offset:7; depth:1; \
+    classtype:protocol-command-decode; priority:2; sid:2000102; rev:1;)

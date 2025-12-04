@@ -32,6 +32,7 @@ declare -A cmd_pkg=(
     [python3]="python3"
     [netstat]="net-tools"
     [iptables]="iptables"
+    [pymodbus]="python3-pymodbus"
 )
 
 missing=()
@@ -71,13 +72,9 @@ cleanup() {
     iptables -t nat -D PREROUTING -p tcp --dport 502 -j REDIRECT --to-port $PROXY_PORT 2>/dev/null
     iptables -D FORWARD -j ACCEPT 2>/dev/null
     
-    # Disable IP forwarding
-    echo "[*] Disabling IP forwarding..."
-    echo 0 > /proc/sys/net/ipv4/ip_forward
-    
     # Stop the Modbus proxy
     echo "[*] Stopping Modbus proxy..."
-    pkill -f "python3.*modbus_mitm_proxy.py"
+    pkill -f "python3.*mitm_replay_attack.py"
     
     echo -e "${GREEN} Cleanup complete - Network restored${NC}\n"
     exit 0
@@ -89,8 +86,8 @@ trap cleanup INT TERM
 echo -e "${YELLOW}[1/6] Checking prerequisites...${NC}"
 
 # Verify the Modbus proxy script exists
-if [ ! -f "modbus_mitm_proxy.py" ]; then
-    echo -e "${RED} modbus_mitm_proxy.py not found!${NC}"
+if [ ! -f "mitm_replay_attack.py" ]; then
+    echo -e "${RED} mitm_replay_attack.py not found!${NC}"
     echo "   Make sure you're in the scripts directory"
     exit 1
 fi
